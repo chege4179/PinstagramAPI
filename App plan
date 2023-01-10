@@ -1,0 +1,34 @@
+
+User
+1. userId
+2. username
+3. Full Name
+4. Bio
+5. FollowerIds => List <userId>
+6. FollowingIds => List <userId>
+7. Password
+8. createdAt
+9. createdOn
+
+Post Item
+1. postType
+2. postURL
+
+Post
+1. userId
+2. postId
+3. postCaption
+4. postContent List<PostItem>
+5. postViews List <userId>
+6. postLikes List <userId>
+7. postComments List<Comment>
+8. createdAt
+9. createdOn
+10.
+
+
+Comment
+1. commentContent
+2. commentUserId
+3.
+
