@@ -1,23 +1,31 @@
-// Import the express in typescript file
 import express,{ Request,Response } from 'express';
+import dotenv from "dotenv"
+import cors from "cors"
+import UserRoutes from "./routes/UserRoutes";
+import {PrismaClient} from "@prisma/client";
 
-// Initialize the express engine
 const app: express.Application = express();
+const prisma = new PrismaClient()
+dotenv.config()
 
-// Take a port 3000 for running server.
-const port: number = 3001;
 
-type MyResponse = {
-     msg:string
-}
-// Handling '/' Request
-app.get('/', (req:Request, res:Response<MyResponse>) => {
-     return res.json({
-          msg:"Pers"
-     });
+
+app.use(cors())
+app.use(express.json())
+app.use(express.urlencoded({ extended:true }))
+
+
+app.get('/', (req:Request, res:Response) => {
+     return res.send("Pinstagram App Server");
 });
-
+app.use('/user',UserRoutes)
 // Server setup
+
+
+
+
+
+const port: number = 9000;
 app.listen(port, () => {
-     console.log(`TypeScript with Express http://localhost:${port}/`);
+     console.log(`PInstagram API running http://localhost:${port}/`);
 });

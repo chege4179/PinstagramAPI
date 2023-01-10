@@ -9,8 +9,10 @@ User
 7. Password
 8. createdAt
 9. createdOn
+10. profileImageURL
+11. email
 
-Post Item
+Post Media Item
 1. postType
 2. postURL
 
@@ -27,8 +29,13 @@ Post
 10.
 
 
-Comment
+Comments
 1. commentContent
 2. commentUserId
-3.
+3. commentLikes
+4. createdAt
+5. createdOn
+6. postId
+
+
 
