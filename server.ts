@@ -38,7 +38,7 @@ app.use('/post',PostRoutes)
 
 
 
-const port: number = 9000;
+const port: number = Number(process.env.PORT) || 9000;
 app.listen(port, () => {
      console.log(`PInstagram API running http://localhost:${port}/`);
 });
