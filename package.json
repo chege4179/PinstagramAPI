@@ -24,6 +24,7 @@
     "jsonwebtoken": "^9.0.0",
     "mysql": "^2.18.1",
     "prisma": "^4.8.1",
+    "runtime-typescript-checker": "^1.0.1",
     "uuid": "^9.0.0"
   },
   "devDependencies": {

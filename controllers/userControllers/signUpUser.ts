@@ -4,6 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 import generateAvatarURL from "../../config/util";
 import {PrismaClientKnownRequestError} from "@prisma/client/runtime";
 import prisma from "../../config/db";
+import {TypedRequestBody} from "../../types/TypedRequestBody";
 
 
 
@@ -16,7 +17,7 @@ type RequestBody = {
      createdOn:string,
 
 }
-const signUpUser = async (req:Request,res:Response) => {
+const signUpUser = async (req:TypedRequestBody<RequestBody>,res:Response) => {
      console.log(req.body)
      try{
           const userId = uuidv4()
