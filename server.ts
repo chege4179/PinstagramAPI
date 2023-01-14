@@ -3,7 +3,7 @@ import dotenv from "dotenv"
 import cors from "cors"
 import {PrismaClient} from "@prisma/client";
 import cloudinary from "cloudinary";
-
+import FileUpload from "express-fileupload"
 
 import PostRoutes from "./routes/PostRoutes";
 import UserRoutes from "./routes/UserRoutes";
@@ -25,6 +25,7 @@ cloudinary.v2.config({
 app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended:true }))
+app.use(FileUpload())
 
 
 app.get('/', (req:Request, res:Response) => {
