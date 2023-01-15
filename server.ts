@@ -1,7 +1,6 @@
 import express,{ Request,Response } from 'express';
 import dotenv from "dotenv"
 import cors from "cors"
-import {PrismaClient} from "@prisma/client";
 import cloudinary from "cloudinary";
 import FileUpload from "express-fileupload"
 import PostRoutes from "./routes/PostRoutes";
@@ -9,7 +8,7 @@ import UserRoutes from "./routes/UserRoutes";
 
 
 const app: express.Application = express();
-const prisma = new PrismaClient()
+
 
 
 dotenv.config()

@@ -5,7 +5,7 @@ import generateAvatarURL from "../../config/util";
 import {PrismaClientKnownRequestError} from "@prisma/client/runtime";
 import prisma from "../../config/db";
 import {TypedRequestBody} from "../../types/TypedRequestBody";
-import {Sign} from "crypto";
+
 
 
 
@@ -38,6 +38,7 @@ const signUpUser = async (req:TypedRequestBody<SignUpRequestBody>,res:Response) 
           })
 
      }catch(err:any){
+          console.log("Error signing up user",err)
           if (err instanceof PrismaClientKnownRequestError){
                if (err.code === "P2002"){
                     return res.json({
