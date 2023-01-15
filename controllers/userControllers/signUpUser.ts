@@ -5,6 +5,7 @@ import generateAvatarURL from "../../config/util";
 import {PrismaClientKnownRequestError} from "@prisma/client/runtime";
 import prisma from "../../config/db";
 import {TypedRequestBody} from "../../types/TypedRequestBody";
+import moment from "moment/moment";
 
 
 
@@ -14,8 +15,6 @@ type SignUpRequestBody = {
      fullName:string,
      email:string
      password:string,
-     createdAt:string,
-     createdOn:string,
 
 }
 const signUpUser = async (req:TypedRequestBody<SignUpRequestBody>,res:Response) => {
@@ -26,7 +25,9 @@ const signUpUser = async (req:TypedRequestBody<SignUpRequestBody>,res:Response) 
           const user = await prisma.user.create({
                data:{
                     ...req.body,
-                    userId,
+                    createdAt:moment().format('LT'),
+                    createdOn:moment().format('L'),
+                    userId :userId,
                     profileImageUrl:generateAvatarURL(req.body.fullName),
                     password:hash
                }
