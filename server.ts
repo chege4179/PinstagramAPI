@@ -4,7 +4,6 @@ import cors from "cors"
 import {PrismaClient} from "@prisma/client";
 import cloudinary from "cloudinary";
 import FileUpload from "express-fileupload"
-
 import PostRoutes from "./routes/PostRoutes";
 import UserRoutes from "./routes/UserRoutes";
 
@@ -21,11 +20,11 @@ cloudinary.v2.config({
      api_secret: process.env.CLOUDINARY_API_SECRET,
      secure: true
 })
-
+app.use(FileUpload({ useTempFiles:true }))
 app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended:true }))
-app.use(FileUpload())
+
 
 
 app.get('/', (req:Request, res:Response) => {
@@ -37,22 +36,7 @@ app.use('/post',PostRoutes)
 
 
 
-
-
 const port: number = Number(process.env.PORT) || 9000;
 app.listen(port, () => {
      console.log(`PInstagram API running http://localhost:${port}/`);
 });
-// type  obj =   {
-//      name:string,
-//      age:number
-// }
-// const myObj = {
-//      name:"Peter",
-//      age:20
-// }
-// if ( myObj is obj){
-//      console.log("Object same")
-// }else {
-//      console.log("Not same")
-// }

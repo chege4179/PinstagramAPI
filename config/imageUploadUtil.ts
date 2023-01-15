@@ -1,6 +1,6 @@
 import cloudinary from "cloudinary";
 
-function uploadImage(ImagePath:string,ImageName:string,imageId:string){
+function uploadImage(ImagePath:string,ImageName:string,imageId:string):Promise<cloudinary.UploadApiResponse| undefined>{
      return new Promise((resolve, reject) => {
           cloudinary.v2.uploader.upload(ImagePath,
                {
@@ -21,7 +21,7 @@ function uploadImage(ImagePath:string,ImageName:string,imageId:string){
                });
      })
 }
-function uploadVideo(ImagePath:string,ImageName:string,imageId:string){
+function uploadVideo(ImagePath:string,ImageName:string,imageId:string):Promise<cloudinary.UploadApiResponse| undefined>{
      return new Promise((resolve, reject) => {
           cloudinary.v2.uploader.upload(ImagePath,
                {

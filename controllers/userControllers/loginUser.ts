@@ -4,12 +4,12 @@ import * as argon from "argon2";
 import jwt from "jsonwebtoken";
 import {TypedRequestBody} from "../../types/TypedRequestBody";
 
-type RequestBody = {
+type LoginRequestBody = {
      email:string,
      password:string
 }
 
-const loginUser = async (req:TypedRequestBody<RequestBody>,res:Response) => {
+const loginUser = async (req:TypedRequestBody<LoginRequestBody>,res:Response) => {
      try{
           const user = await prisma.user.findUnique({
                where:{

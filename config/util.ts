@@ -14,5 +14,8 @@ function generateAvatarURL(name:string){
      return `https://ui-avatars.com/api/?background=${color}&color=fff&name=${splitname}&bold=true&fontsize=0.6&rounded=true`
 
 }
-
+function getFileExtension(fileName:string) {
+     return fileName.split('.').pop();
+}
+export { getFileExtension }
 export default generateAvatarURL

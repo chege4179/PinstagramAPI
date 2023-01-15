@@ -5,10 +5,11 @@ import generateAvatarURL from "../../config/util";
 import {PrismaClientKnownRequestError} from "@prisma/client/runtime";
 import prisma from "../../config/db";
 import {TypedRequestBody} from "../../types/TypedRequestBody";
+import {Sign} from "crypto";
 
 
 
-type RequestBody = {
+type SignUpRequestBody = {
      username:string,
      fullName:string,
      email:string
@@ -17,7 +18,7 @@ type RequestBody = {
      createdOn:string,
 
 }
-const signUpUser = async (req:TypedRequestBody<RequestBody>,res:Response) => {
+const signUpUser = async (req:TypedRequestBody<SignUpRequestBody>,res:Response) => {
      console.log(req.body)
      try{
           const userId = uuidv4()
