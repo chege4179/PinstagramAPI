@@ -5,6 +5,7 @@ import cloudinary from "cloudinary";
 import FileUpload from "express-fileupload"
 import PostRoutes from "./routes/PostRoutes";
 import UserRoutes from "./routes/UserRoutes";
+import CommentRoutes from "./routes/CommentRoutes";
 
 
 const app: express.Application = express();
@@ -25,12 +26,12 @@ app.use(express.json())
 app.use(express.urlencoded({ extended:true }))
 
 
-
 app.get('/', (req:Request, res:Response) => {
      return res.send("Pinstagram App Server");
 });
 app.use('/user',UserRoutes)
 app.use('/post',PostRoutes)
+app.use('/comment',CommentRoutes)
 // Server setup
 
 
