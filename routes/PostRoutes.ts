@@ -7,7 +7,7 @@ import getAllPosts from "../controllers/postControllers/getAllPosts";
 
 
 router.post('/create', createPost)
-router.get('/all',getPostByUser)
+router.get('/all/:userId',getPostByUser)
 router.get('/allPosts',getAllPosts)
 
 export default router

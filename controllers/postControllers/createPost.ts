@@ -10,7 +10,8 @@ import { Prisma }from "@prisma/client"
 
 
 type CreatePostRequestBody =  {
-     user:string,
+
+     userId:string,
      caption:string
 
 }
@@ -18,8 +19,8 @@ type CreatePostRequestBody =  {
 const createPost = async (req:TypedRequestBody<CreatePostRequestBody>,res:Response) => {
 
 
-     const user = JSON.parse(req.body.user)
-     console.log("User",user)
+
+
      const caption = req.body.caption
 
      let mediaAssets  = [];
@@ -27,7 +28,7 @@ const createPost = async (req:TypedRequestBody<CreatePostRequestBody>,res:Respon
           for (const image in req.files) {
                mediaAssets.push(req.files[image])
           }
-          const mediaAssetsInfo:Promise<{ postMediaURL: any; postMediaId: any; postMediaType: string } | { postMediaURL: any; postMediaId: any; postMediaType: string } | null>[] = mediaAssets.map(async (mediaAsset:UploadedFile | UploadedFile[]) => {
+          const mediaAssetsInfo:Promise<{ postMediaURL: any; postMediaType: string } | null>[] = mediaAssets.map(async (mediaAsset:UploadedFile | UploadedFile[]) => {
 
                if ("tempFilePath" in mediaAsset) {
                     console.log("Here")
@@ -38,7 +39,6 @@ const createPost = async (req:TypedRequestBody<CreatePostRequestBody>,res:Respon
                               })
 
                          return {
-                              postMediaId:response?.public_id,
                               postMediaURL:response?.secure_url,
                               postMediaType: "video"
                          }
@@ -49,7 +49,6 @@ const createPost = async (req:TypedRequestBody<CreatePostRequestBody>,res:Respon
                               })
 
                          return {
-                              postMediaId:response?.public_id,
                               postMediaURL:response?.secure_url,
                               postMediaType: "image"
                          }
@@ -60,6 +59,21 @@ const createPost = async (req:TypedRequestBody<CreatePostRequestBody>,res:Respon
           })
           const imageUrls = await Promise.all(mediaAssetsInfo)
           console.log("Image Urls",imageUrls )
+          const dummyMedia = [
+               {
+                    postMediaType:"Test 1",
+                    postMediaURL:"Test 1"
+               },
+               {
+                    postMediaType:"Test 2",
+                    postMediaURL:"Test 2"
+               },
+               {
+                    postMediaType:"Teseeeeeet 2",
+                    postMediaURL:"Teeeeest 2"
+               },
+
+          ]
 
 
 
@@ -67,22 +81,22 @@ const createPost = async (req:TypedRequestBody<CreatePostRequestBody>,res:Respon
           const newPost = await prisma.post.create({
                data:{
                     postId: postId,
-                    postUserId:user.userId,
                     postCaption:caption,
                     createdAt:moment().format('LT'),
                     createdOn:moment().format('L'),
-                    postLikes:[],
-                    postViews:[],
+                    postAuthorId:req.body.userId,
+
+
                }
           })
 
-          const newPostContent = await prisma.postMediaItem.createMany({
+          const newPostContent = await prisma.postMedia.createMany({
                // @ts-ignore
                data:
-                    [...imageUrls.map((image) => {
+                    [...dummyMedia.reverse().map((image) => {
                     return {
                          ...image,
-                         postPostId:postId
+                         postMediaPostId:postId
                     }
                })],
                skipDuplicates:true,
