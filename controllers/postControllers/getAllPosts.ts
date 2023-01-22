@@ -9,7 +9,12 @@ const getAllPosts = async (req:Request,res:Response) => {
                     postContent:true,
                     likes:true,
                     views:true,
-                    comments:true
+                    comments:{
+                         include:{
+                              commentAuthor:true,
+
+                         }
+                    }
 
                }
           })
