@@ -17,10 +17,7 @@ type CreatePostRequestBody =  {
 }
 
 const createPost = async (req:TypedRequestBody<CreatePostRequestBody>,res:Response) => {
-
-
-
-
+     console.log("Request Body",req.body)
      const caption = req.body.caption
 
      let mediaAssets  = [];
@@ -31,7 +28,7 @@ const createPost = async (req:TypedRequestBody<CreatePostRequestBody>,res:Respon
           const mediaAssetsInfo:Promise<{ postMediaURL: any; postMediaType: string } | null>[] = mediaAssets.map(async (mediaAsset:UploadedFile | UploadedFile[]) => {
 
                if ("tempFilePath" in mediaAsset) {
-                    console.log("Here")
+               
                     if (getFileExtension(mediaAsset.name) ==="mp4"){
                          const response = await uploadVideo(mediaAsset.tempFilePath, mediaAsset.name, mediaAsset.name)
                               .catch((err) => {
@@ -58,7 +55,6 @@ const createPost = async (req:TypedRequestBody<CreatePostRequestBody>,res:Respon
                }
           })
           const imageUrls = await Promise.all(mediaAssetsInfo)
-          console.log("Image Urls",imageUrls )
           const dummyMedia = [
                {
                     postMediaType:"Test 1",
@@ -84,7 +80,7 @@ const createPost = async (req:TypedRequestBody<CreatePostRequestBody>,res:Respon
                     postCaption:caption,
                     createdAt:moment().format('LT'),
                     createdOn:moment().format('L'),
-                    postAuthorId:req.body.userId,
+                    postAuthorId:req.body.userId.replace(/['"]/g, ''),
 
 
                }
@@ -93,7 +89,7 @@ const createPost = async (req:TypedRequestBody<CreatePostRequestBody>,res:Respon
           const newPostContent = await prisma.postMedia.createMany({
                // @ts-ignore
                data:
-                    [...dummyMedia.reverse().map((image) => {
+                    [...imageUrls.reverse().map((image) => {
                     return {
                          ...image,
                          postMediaPostId:postId

@@ -19,6 +19,10 @@ const getUserById = async (req:TypedRequestParams<RequestParams>,res:Response) =
           const user = await prisma.user.findUnique({
                where:{
                     userId:userId
+               },
+               include:{
+                    followers:true,
+                    following:true
                }
           })
           if (user === null){
@@ -28,18 +32,21 @@ const getUserById = async (req:TypedRequestParams<RequestParams>,res:Response) =
 
                })
           }else {
-               const posts = await prisma.post.findMany()
-               // const newPosts = await Promise.all(posts.map(async (post) => {
-               //      return {
-               //           ...post,
-               //           postsContent:await prisma.postMediaItem.findMany({
-               //                where:{
-               //                     postPostId: post.postId
-               //                }
-               //           })
-               //
-               //      }
-               // }))
+               const posts = await prisma.post.findMany({
+                    where:{
+                         postAuthorId:req.params.userId
+                    },
+                    include:{
+                         postContent:true,
+                         likes:true,
+                         comments:true,
+                         views:true,
+                         postCreator:true,
+
+
+                    }
+               })
+          
                return res.json({
                     msg:"User fetched successfully",
                     success:true,

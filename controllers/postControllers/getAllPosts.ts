@@ -7,6 +7,7 @@ const getAllPosts = async (req:Request,res:Response) => {
           const posts = await prisma.post.findMany({
                include:{
                     postContent:true,
+                    postCreator:true,
                     likes:true,
                     views:true,
                     comments:{

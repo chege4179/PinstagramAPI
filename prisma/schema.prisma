@@ -52,7 +52,7 @@ model PostMedia {
 
   postMediaPostId String
 
-  post          Post  @relation(fields: [postMediaPostId], references: [postId])
+  post          Post  @relation(fields: [postMediaPostId], references: [postId] ,onDelete: Cascade,onUpdate: Cascade)
 
 }
 
@@ -67,8 +67,8 @@ model Comment {
   commentPostId  String
 
 
-  post           Post  @relation(fields: [commentPostId], references: [postId])
-  commentAuthor User   @relation(fields: [commentAuthorId], references: [userId])
+  post           Post  @relation(fields: [commentPostId], references: [postId],onDelete: Cascade,onUpdate: Cascade)
+  commentAuthor User   @relation(fields: [commentAuthorId], references: [userId],onDelete: Cascade,onUpdate: Cascade)
 }
 
 

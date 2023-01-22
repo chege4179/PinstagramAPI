@@ -14,6 +14,10 @@ const loginUser = async (req:TypedRequestBody<LoginRequestBody>,res:Response) =>
           const user = await prisma.user.findUnique({
                where:{
                     email:req.body.email,
+               },
+               include:{
+                    following:true,
+                    followers:true,
                }
           })
           if (!user) {
