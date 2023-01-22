@@ -3,7 +3,15 @@ import prisma from "../../config/db";
 
 const getAllUsers = async (req:Request,res:Response) => {
      try{
-          const users = await prisma.user.findMany({})
+          const users = await prisma.user.findMany({
+               include:{
+                    posts:true,
+                    likes:true,
+                    followers:true,
+                    following:true,
+               }
+
+          })
           return res.json({
                msg:"All Users fetched successfully",
                success:true,
@@ -14,7 +22,7 @@ const getAllUsers = async (req:Request,res:Response) => {
           console.log("Error getting users",err)
           return res.json({
                msg:"An unexpected error occurred fetching all users",
-               success:true,
+               success:false,
           })
      }
 

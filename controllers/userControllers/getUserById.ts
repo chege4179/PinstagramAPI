@@ -28,27 +28,23 @@ const getUserById = async (req:TypedRequestParams<RequestParams>,res:Response) =
 
                })
           }else {
-               const posts = await prisma.post.findMany({
-                    where:{
-                         postUserId: userId
-                    }
-               })
-               const newPosts = await Promise.all(posts.map(async (post) => {
-                    return {
-                         ...post,
-                         postsContent:await prisma.postMediaItem.findMany({
-                              where:{
-                                   postPostId: post.postId
-                              }
-                         })
-
-                    }
-               }))
+               const posts = await prisma.post.findMany()
+               // const newPosts = await Promise.all(posts.map(async (post) => {
+               //      return {
+               //           ...post,
+               //           postsContent:await prisma.postMediaItem.findMany({
+               //                where:{
+               //                     postPostId: post.postId
+               //                }
+               //           })
+               //
+               //      }
+               // }))
                return res.json({
                     msg:"User fetched successfully",
                     success:true,
                     user,
-                    posts:newPosts
+                    posts:posts
                })
           }
      }catch (err:any){

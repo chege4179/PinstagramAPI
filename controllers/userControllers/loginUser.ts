@@ -41,7 +41,7 @@ const loginUser = async (req:TypedRequestBody<LoginRequestBody>,res:Response) =>
                }
           }
      }catch (err) {
-          console.log(err)
+          console.log("An unexpected error occurred login a user >>>>>>>>>",err)
           return res.json({
                msg:"An unexpected error occurred...Please try again",
                success:false,

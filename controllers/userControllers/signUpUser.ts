@@ -20,16 +20,18 @@ type SignUpRequestBody = {
 const signUpUser = async (req:TypedRequestBody<SignUpRequestBody>,res:Response) => {
      console.log(req.body)
      try{
-          const userId = uuidv4()
           const hash = await argon.hash(req.body.password);
           const user = await prisma.user.create({
                data:{
-                    ...req.body,
+
+                    username:req.body.username,
+                    fullName:req.body.fullName,
+                    email:req.body.email,
+                    password:hash,
                     createdAt:moment().format('LT'),
                     createdOn:moment().format('L'),
-                    userId :userId,
                     profileImageUrl:generateAvatarURL(req.body.fullName),
-                    password:hash
+
                }
           })
           return res.json({

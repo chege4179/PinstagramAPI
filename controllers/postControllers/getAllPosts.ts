@@ -4,28 +4,26 @@ import prisma from "../../config/db";
 
 const getAllPosts = async (req:Request,res:Response) => {
      try{
-          const posts = await prisma.post.findMany()
-          const postsWithImages = await Promise.all(posts.map(async (post) => {
-               return{
-                    ...post,
-                    postUser: await prisma.user.findUnique({
-                         where:{
-                              userId: post.postUserId
+          const posts = await prisma.post.findMany({
+               include:{
+                    postContent:true,
+                    likes:true,
+                    views:true,
+                    comments:{
+                         include:{
+                              commentAuthor:true,
+
                          }
-                    }),
-                    postsContent:await prisma.postMediaItem.findMany({
-                         where:{
-                              postPostId:post.postId
-                         }
-                    })
+                    }
+
                }
-          }))
+          })
+
           return res.json({
                msg:"Post fetched successfully",
                success:true,
-               posts:postsWithImages
+               posts:posts
           })
-
 
      }catch (err){
           console.log(err)
