@@ -3,6 +3,7 @@ import prisma from "../../config/db";
 import * as argon from "argon2";
 import jwt from "jsonwebtoken";
 import {TypedRequestBody} from "../../types/TypedRequestBody";
+import {validationResult} from "express-validator";
 
 type LoginRequestBody = {
      email:string,
@@ -10,6 +11,13 @@ type LoginRequestBody = {
 }
 
 const loginUser = async (req:TypedRequestBody<LoginRequestBody>,res:Response) => {
+     const errors = validationResult(req);
+     if (!errors.isEmpty()) {
+          return res.status(400).json({
+               msg:"Please input correct information",
+               success:false
+          });
+     }
      try{
           const user = await prisma.user.findUnique({
                where:{

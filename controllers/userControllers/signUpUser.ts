@@ -6,6 +6,7 @@ import {PrismaClientKnownRequestError} from "@prisma/client/runtime";
 import prisma from "../../config/db";
 import {TypedRequestBody} from "../../types/TypedRequestBody";
 import moment from "moment/moment";
+import {validationResult} from "express-validator";
 
 
 
@@ -19,6 +20,13 @@ type SignUpRequestBody = {
 }
 const signUpUser = async (req:TypedRequestBody<SignUpRequestBody>,res:Response) => {
      console.log(req.body)
+     const errors = validationResult(req);
+     if (!errors.isEmpty()) {
+          return res.status(400).json({
+               msg:"Please input correct information",
+               success:false
+          });
+     }
      try{
           const hash = await argon.hash(req.body.password);
           const user = await prisma.user.create({

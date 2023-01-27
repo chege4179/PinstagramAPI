@@ -5,11 +5,23 @@ import getAllUsers from "../controllers/userControllers/getAllUsers";
 import getUserById from "../controllers/userControllers/getUserById";
 import followUser from "../controllers/userControllers/followUser";
 import unfollowUser from "../controllers/userControllers/unfollowUser";
+import {body} from "express-validator";
 
 const router = express.Router()
 
-router.post('/signup', signUpUser)
-router.post('/login',loginUser)
+router.post('/signup',
+     body("email").isEmail().isLength({ min:5 }),
+     body("password").isLength({ min: 5 }),
+     body("fullName").isLength({ min: 5 }),
+     body("username").isLength({ min: 5 }),
+     signUpUser)
+
+router.post('/login',
+     body("email").isEmail().isLength({ min:5 }),
+     body("password").isLength({ min: 5 }),
+     loginUser)
+
+
 router.get('/all',getAllUsers)
 router.get("/single/:userId",getUserById)
 
