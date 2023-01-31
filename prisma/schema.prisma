@@ -3,6 +3,7 @@
 
 generator client {
   provider = "prisma-client-js"
+  previewFeatures = ["fullTextSearch", "fullTextIndex"]
 }
 
 datasource db {
@@ -26,6 +27,8 @@ model User {
   views           View[]
   followers       Follower[] @relation("Followers")
   following       Follower[] @relation("Following")
+
+  @@fulltext([username])
 
 }
 model Post {

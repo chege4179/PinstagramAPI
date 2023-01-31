@@ -6,6 +6,7 @@ import getUserById from "../controllers/userControllers/getUserById";
 import followUser from "../controllers/userControllers/followUser";
 import unfollowUser from "../controllers/userControllers/unfollowUser";
 import {body} from "express-validator";
+import searchUser from "../controllers/userControllers/searchUser";
 
 const router = express.Router()
 
@@ -24,6 +25,7 @@ router.post('/login',
 
 router.get('/all',getAllUsers)
 router.get("/single/:userId",getUserById)
+router.get("/search",searchUser)
 
 router.post('/follow',followUser)
 router.post('/unfollow',unfollowUser)
