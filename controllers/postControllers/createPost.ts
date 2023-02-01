@@ -1,4 +1,4 @@
-import express, {Response,Request} from "express";
+import  {Response} from "express";
 import {uploadImage, uploadVideo} from "../../config/imageUploadUtil";
 import {TypedRequestBody} from "../../types/TypedRequestBody";
 import { UploadedFile} from "express-fileupload";
@@ -6,7 +6,7 @@ import {getFileExtension} from "../../config/util";
 import prisma from "../../config/db";
 import {v4 as uuidv4} from "uuid";
 import moment from "moment";
-import { Prisma }from "@prisma/client"
+
 
 
 type CreatePostRequestBody =  {
@@ -28,7 +28,7 @@ const createPost = async (req:TypedRequestBody<CreatePostRequestBody>,res:Respon
           const mediaAssetsInfo:Promise<{ postMediaURL: any; postMediaType: string } | null>[] = mediaAssets.map(async (mediaAsset:UploadedFile | UploadedFile[]) => {
 
                if ("tempFilePath" in mediaAsset) {
-               
+
                     if (getFileExtension(mediaAsset.name) ==="mp4"){
                          const response = await uploadVideo(mediaAsset.tempFilePath, mediaAsset.name, mediaAsset.name)
                               .catch((err) => {
